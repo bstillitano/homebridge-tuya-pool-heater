@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Package artifacts
+*.tgz
+package/
+
+# Coverage
+coverage/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local config (may contain secrets)
+deploy.sh
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.local

@@ -1,0 +1,30 @@
+# Source files (dist is published)
+src/
+
+# Tests
+*.test.ts
+jest.config.js
+coverage/
+
+# Development files
+tsconfig.json
+.gitignore
+.github/
+
+# Local scripts
+deploy.sh
+deploy.example.sh
+
+# Documentation (keep README)
+TESTING.md
+
+# Build artifacts
+*.tgz
+package/
+
+# IDE
+.idea/
+.vscode/
+
+# OS files
+.DS_Store

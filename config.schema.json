@@ -1,0 +1,247 @@
+{
+  "pluginAlias": "TuyaPoolHeatPump",
+  "pluginType": "platform",
+  "singular": true,
+  "headerDisplay": "Homebridge plugin for Tuya-based pool heat pumps",
+  "footerDisplay": "For help, see the [GitHub repository](https://github.com/bstillitano/homebridge-tuya-pool-heater)",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "title": "Platform Name",
+        "type": "string",
+        "default": "Tuya Pool Heat Pump",
+        "required": true
+      },
+      "options": {
+        "title": "Tuya API Options",
+        "type": "object",
+        "properties": {
+          "accessId": {
+            "title": "Access ID",
+            "type": "string",
+            "required": true,
+            "description": "Your Tuya IoT Platform Access ID"
+          },
+          "accessKey": {
+            "title": "Access Key",
+            "type": "string",
+            "required": true,
+            "description": "Your Tuya IoT Platform Access Secret"
+          },
+          "endpoint": {
+            "title": "API Endpoint",
+            "type": "string",
+            "required": true,
+            "default": "https://openapi.tuyaus.com",
+            "oneOf": [
+              { "title": "US - West", "enum": ["https://openapi.tuyaus.com"] },
+              { "title": "EU - Central", "enum": ["https://openapi.tuyaeu.com"] },
+              { "title": "China", "enum": ["https://openapi.tuyacn.com"] },
+              { "title": "India", "enum": ["https://openapi.tuyain.com"] }
+            ],
+            "description": "Select the Tuya API endpoint for your region"
+          },
+          "username": {
+            "title": "Username",
+            "type": "string",
+            "required": true,
+            "description": "Your Tuya/Smart Life app username (email)"
+          },
+          "password": {
+            "title": "Password",
+            "type": "string",
+            "required": true,
+            "description": "Your Tuya/Smart Life app password"
+          },
+          "countryCode": {
+            "title": "Country Code",
+            "type": "integer",
+            "required": true,
+            "default": 1,
+            "description": "Your country calling code (e.g., 1 for US, 44 for UK, 61 for Australia)"
+          },
+          "pollInterval": {
+            "title": "Poll Interval (ms)",
+            "type": "integer",
+            "default": 30000,
+            "minimum": 5000,
+            "maximum": 300000,
+            "description": "How often to poll for device status updates (in milliseconds)"
+          }
+        }
+      },
+      "devices": {
+        "title": "Devices",
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "title": "Device ID",
+              "type": "string",
+              "required": true,
+              "description": "The Tuya device ID (found in Tuya IoT Platform or app logs)"
+            },
+            "name": {
+              "title": "Device Name",
+              "type": "string",
+              "required": true,
+              "default": "Pool Heat Pump",
+              "description": "The name to display in HomeKit"
+            },
+            "accessoryType": {
+              "title": "Accessory Type",
+              "type": "string",
+              "required": true,
+              "default": "thermostat",
+              "oneOf": [
+                { "title": "Thermostat", "enum": ["thermostat"] },
+                { "title": "Heater/Cooler", "enum": ["heatercooler"] }
+              ],
+              "description": "How the device should appear in HomeKit"
+            },
+            "heatingRange": {
+              "title": "Heating Temperature Range",
+              "type": "object",
+              "properties": {
+                "min": {
+                  "title": "Min (°C)",
+                  "type": "integer",
+                  "default": 5,
+                  "minimum": 0,
+                  "maximum": 60
+                },
+                "max": {
+                  "title": "Max (°C)",
+                  "type": "integer",
+                  "default": 55,
+                  "minimum": 0,
+                  "maximum": 60
+                }
+              }
+            },
+            "coolingRange": {
+              "title": "Cooling Temperature Range",
+              "type": "object",
+              "properties": {
+                "min": {
+                  "title": "Min (°C)",
+                  "type": "integer",
+                  "default": 5,
+                  "minimum": 0,
+                  "maximum": 60
+                },
+                "max": {
+                  "title": "Max (°C)",
+                  "type": "integer",
+                  "default": 35,
+                  "minimum": 0,
+                  "maximum": 60
+                }
+              }
+            },
+            "autoRange": {
+              "title": "Auto Temperature Range",
+              "type": "object",
+              "properties": {
+                "min": {
+                  "title": "Min (°C)",
+                  "type": "integer",
+                  "default": 5,
+                  "minimum": 0,
+                  "maximum": 60
+                },
+                "max": {
+                  "title": "Max (°C)",
+                  "type": "integer",
+                  "default": 40,
+                  "minimum": 0,
+                  "maximum": 60
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "layout": [
+    {
+      "type": "fieldset",
+      "title": "Tuya API Configuration",
+      "expandable": false,
+      "items": [
+        "options.accessId",
+        "options.accessKey",
+        "options.endpoint",
+        "options.username",
+        "options.password",
+        "options.countryCode",
+        { "key": "options.pollInterval", "type": "number" }
+      ]
+    },
+    {
+      "type": "fieldset",
+      "title": "Devices",
+      "expandable": true,
+      "expanded": true,
+      "items": [
+        {
+          "key": "devices",
+          "type": "array",
+          "buttonText": "Add Device",
+          "items": [
+            "devices[].id",
+            "devices[].name",
+            "devices[].accessoryType",
+            {
+              "type": "fieldset",
+              "title": "Temperature Ranges (Optional)",
+              "expandable": true,
+              "expanded": false,
+              "items": [
+                {
+                  "type": "help",
+                  "helpvalue": "<strong>Heating Mode</strong>"
+                },
+                {
+                  "type": "flex",
+                  "flex-flow": "row wrap",
+                  "items": [
+                    { "key": "devices[].heatingRange.min", "type": "number" },
+                    { "key": "devices[].heatingRange.max", "type": "number" }
+                  ]
+                },
+                {
+                  "type": "help",
+                  "helpvalue": "<strong>Cooling Mode</strong>"
+                },
+                {
+                  "type": "flex",
+                  "flex-flow": "row wrap",
+                  "items": [
+                    { "key": "devices[].coolingRange.min", "type": "number" },
+                    { "key": "devices[].coolingRange.max", "type": "number" }
+                  ]
+                },
+                {
+                  "type": "help",
+                  "helpvalue": "<strong>Auto Mode</strong>"
+                },
+                {
+                  "type": "flex",
+                  "flex-flow": "row wrap",
+                  "items": [
+                    { "key": "devices[].autoRange.min", "type": "number" },
+                    { "key": "devices[].autoRange.max", "type": "number" }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
