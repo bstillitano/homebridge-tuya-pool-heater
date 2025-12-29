@@ -130,6 +130,16 @@ export class TuyaPoolHeatPumpPlatform implements DynamicPlatformPlugin {
   }
 
   private registerDevice(deviceConfig: DeviceConfig): void {
+    if (!deviceConfig.id) {
+      this.log.error('Device config missing required "id" field. Skipping device.');
+      return;
+    }
+
+    if (!deviceConfig.name) {
+      this.log.error(`Device ${deviceConfig.id} missing required "name" field. Skipping device.`);
+      return;
+    }
+
     const uuid = this.api.hap.uuid.generate(deviceConfig.id);
     const existingAccessory = this.accessories.find(acc => acc.UUID === uuid);
 
