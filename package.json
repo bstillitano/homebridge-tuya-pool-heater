@@ -2,7 +2,7 @@
   "private": false,
   "displayName": "Homebridge Tuya Pool Heater",
   "name": "homebridge-tuya-pool-heater",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Homebridge plugin for Tuya-based pool heat pumps with proper temperature scaling and HeaterCooler/Thermostat support",
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
