@@ -196,47 +196,31 @@
             "devices[].name",
             "devices[].accessoryType",
             {
-              "type": "fieldset",
-              "title": "Temperature Ranges (Optional)",
-              "expandable": true,
-              "expanded": false,
+              "type": "help",
+              "helpvalue": "<em>Temperature Ranges (Optional) - leave blank for defaults</em>"
+            },
+            {
+              "type": "flex",
+              "flex-flow": "row wrap",
               "items": [
-                {
-                  "type": "help",
-                  "helpvalue": "<strong>Heating Mode</strong>"
-                },
-                {
-                  "type": "flex",
-                  "flex-flow": "row wrap",
-                  "items": [
-                    { "key": "devices[].heatingRange.min", "type": "number" },
-                    { "key": "devices[].heatingRange.max", "type": "number" }
-                  ]
-                },
-                {
-                  "type": "help",
-                  "helpvalue": "<strong>Cooling Mode</strong>"
-                },
-                {
-                  "type": "flex",
-                  "flex-flow": "row wrap",
-                  "items": [
-                    { "key": "devices[].coolingRange.min", "type": "number" },
-                    { "key": "devices[].coolingRange.max", "type": "number" }
-                  ]
-                },
-                {
-                  "type": "help",
-                  "helpvalue": "<strong>Auto Mode</strong>"
-                },
-                {
-                  "type": "flex",
-                  "flex-flow": "row wrap",
-                  "items": [
-                    { "key": "devices[].autoRange.min", "type": "number" },
-                    { "key": "devices[].autoRange.max", "type": "number" }
-                  ]
-                }
+                { "key": "devices[].heatingRange.min", "type": "number", "title": "Heating Min (°C)" },
+                { "key": "devices[].heatingRange.max", "type": "number", "title": "Heating Max (°C)" }
+              ]
+            },
+            {
+              "type": "flex",
+              "flex-flow": "row wrap",
+              "items": [
+                { "key": "devices[].coolingRange.min", "type": "number", "title": "Cooling Min (°C)" },
+                { "key": "devices[].coolingRange.max", "type": "number", "title": "Cooling Max (°C)" }
+              ]
+            },
+            {
+              "type": "flex",
+              "flex-flow": "row wrap",
+              "items": [
+                { "key": "devices[].autoRange.min", "type": "number", "title": "Auto Min (°C)" },
+                { "key": "devices[].autoRange.max", "type": "number", "title": "Auto Max (°C)" }
               ]
             }
           ]
